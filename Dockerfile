@@ -4,7 +4,7 @@ COPY src /tmp/src/
 
 COPY pom.xml /tmp/
 
-COPY buildspec.yml /tmp/
+COPY buildspec.yaml /tmp/
 
 WORKDIR /tmp/
 
