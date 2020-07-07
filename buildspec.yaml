@@ -23,7 +23,7 @@ phases:
   post_build:
     commands:
       - docker push 208054002969.dkr.ecr.us-east-1.amazonaws.com/teledoc-rokket:latest
-      - CREDENTIALS=$(aws sts assume-role --role-arn arn:aws:iam::208054002969:role/CodeBuildKubectlRole --role-session-name codebuild-kubectl --duration-seconds 900)
+      # - CREDENTIALS=$(aws sts assume-role --role-arn arn:aws:iam::208054002969:role/CodeBuildKubectlRole --role-session-name codebuild-kubectl --duration-seconds 900)
       - kubectl apply -f deployment.yaml
       # - CREDENTIALS=$(aws sts assume-role --role-arn $EKS_KUBECTL_ROLE_ARN --role-session-name codebuild-kubectl --duration-seconds 900)
       # - export AWS_ACCESS_KEY_ID="$(echo ${CREDENTIALS} | jq -r '.Credentials.AccessKeyId')"
