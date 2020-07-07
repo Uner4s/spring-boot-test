@@ -4,7 +4,7 @@ env:
   variables:
     IMAGE_REPO_NAME: "teledoc-rokket"
     DOCKERCONTAINER: "208054002969.dkr.ecr.us-east-1.amazonaws.com"
-    COMMIT_HASH: $(head -c 7)
+    COMMIT_HASH: $(git rev-parse HEAD)
 
 phases:
   install:
