@@ -13,9 +13,6 @@ phases:
       - echo Logging in to Amazon ECR...
       - $(aws ecr get-login --no-include-email --region us-east-1)
       - export KUBECONFIG=$HOME/.kube/config
-    #   - $(aws ecr get-login --no-include-email --region us-east-1)
-    #   - export KUBECONFIG=$HOME/.kube/config
-    #   - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 208054002969.dkr.ecr.us-east-1.amazonaws.com
   build:
     commands:
       - echo Build started on `date`
@@ -25,11 +22,11 @@ phases:
   post_build:
     commands:
       - docker push 208054002969.dkr.ecr.us-east-1.amazonaws.com/teledoc-rokket:latest
+      - kubectl apply -f deployment.yaml
       # - CREDENTIALS=$(aws sts assume-role --role-arn $EKS_KUBECTL_ROLE_ARN --role-session-name codebuild-kubectl --duration-seconds 900)
       # - export AWS_ACCESS_KEY_ID="$(echo ${CREDENTIALS} | jq -r '.Credentials.AccessKeyId')"
       # - export AWS_SECRET_ACCESS_KEY="$(echo ${CREDENTIALS} | jq -r '.Credentials.SecretAccessKey')"
       # - export AWS_SESSION_TOKEN="$(echo ${CREDENTIALS} | jq -r '.Credentials.SessionToken')"
       # - export AWS_EXPIRATION=$(echo ${CREDENTIALS} | jq -r '.Credentials.Expiration')
-      # - aws eks update-kubeconfig --name $EKS_CLUSTER_NAME
-      # - kubectl apply -f hello-k8s.yml
-      # - printf '[{"name":"hello-k8s","imageUri":"%s"}]' $REPOSITORY_URI:$TAG > build.json
+      # - aws eks update-kubeconfig --name main-cluster
+      # - kubectl apply -f deployment.yml
