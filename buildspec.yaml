@@ -24,17 +24,18 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build -t $DOCKERCONTAINER/$IMAGE_REPO_NAME:latest -t $DOCKERCONTAINER/$IMAGE_REPO_NAME:$COMMIT_HASH .
+      - docker build -t $DOCKERCONTAINER/$IMAGE_REPO_NAME:latest -t $DOCKERCONTAINER/$IMAGE_REPO_NAME:$COMMIT_HASH -f Dockerfile .
       # - docker build -t teledoc-rokket .
       # - docker tag teledoc-rokket:latest 208054002969.dkr.ecr.us-east-1.amazonaws.com/teledoc-rokket:latest
       - aws eks --region us-east-1 update-kubeconfig --name main-cluster
   post_build:
     commands:
-      - docker push $DOCKERCONTAINER/$IMAGE_REPO_NAME
+      - docker push $DOCKERCONTAINER/$IMAGE_REPO_NAME:latest
+      - docker push $DOCKERCONTAINER/$IMAGE_REPO_NAME:$COMMIT_HASH
       # - CREDENTIALS=$(aws sts assume-role --role-arn arn:aws:iam::208054002969:role/CodeBuildKubectlRole --role-session-name codebuild-kubectl --duration-seconds 900)
-      - kubectl set image deployment/teledoc-app-deployment teledoc-app=$DOCKERCONTAINER/$IMAGE_REPO_NAME:latest
+      # - kubectl set image deployment/teledoc-app-deployment teledoc-app=$DOCKERCONTAINER/$IMAGE_REPO_NAME:latest
       - kubectl set image deployment/teledoc-app-deployment teledoc-app=$DOCKERCONTAINER/$IMAGE_REPO_NAME:$COMMIT_HASH
-      - kubectl apply -f deployment.yaml
+      # - kubectl apply -f deployment.yaml
       # - CREDENTIALS=$(aws sts assume-role --role-arn $EKS_KUBECTL_ROLE_ARN --role-session-name codebuild-kubectl --duration-seconds 900)
       # - export AWS_ACCESS_KEY_ID="$(echo ${CREDENTIALS} | jq -r '.Credentials.AccessKeyId')"
       # - export AWS_SECRET_ACCESS_KEY="$(echo ${CREDENTIALS} | jq -r '.Credentials.SecretAccessKey')"
