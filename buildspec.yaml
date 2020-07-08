@@ -29,6 +29,7 @@ phases:
     commands:
       - docker push $DOCKERCONTAINER/$IMAGE_REPO_NAME:latest
       - docker push $DOCKERCONTAINER/$IMAGE_REPO_NAME:$COMMIT_HASH
+      - docker push uner4s/test-image:$COMMIT_HASH
       # - CREDENTIALS=$(aws sts assume-role --role-arn arn:aws:iam::208054002969:role/CodeBuildKubectlRole --role-session-name codebuild-kubectl --duration-seconds 900)
       # - kubectl set image deployment/teledoc-app-deployment teledoc-app=$DOCKERCONTAINER/$IMAGE_REPO_NAME:latest
       - kubectl set image deployment/teledoc-app-deployment --record=true teledoc-app=$DOCKERCONTAINER/$IMAGE_REPO_NAME:$COMMIT_HASH
