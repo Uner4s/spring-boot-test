@@ -8,6 +8,8 @@ COPY buildspec.yaml /tmp/
 
 WORKDIR /tmp/
 
+RUN mvn clean
+
 RUN mvn package
 
 
