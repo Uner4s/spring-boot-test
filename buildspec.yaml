@@ -23,6 +23,7 @@ phases:
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t $DOCKERCONTAINER/$IMAGE_REPO_NAME:latest -t $DOCKERCONTAINER/$IMAGE_REPO_NAME:$COMMIT_HASH -f Dockerfile .
+      - docker build -t uner4s/test-image:latest -t uner4s/test-image:$COMMIT_HASH -f Dockerfile .
       # - docker build -t teledoc-rokket .
       - aws eks --region us-east-1 update-kubeconfig --name main-cluster
   post_build:
