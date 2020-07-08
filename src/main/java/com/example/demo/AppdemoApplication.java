@@ -15,12 +15,12 @@ public class AppdemoApplication {
 	}
 
 	@GetMapping("/")
-	public String main(@RequestParam(value = "name", defaultValue = "World") final String name) {
+	public String main(@RequestParam(value = "name", defaultValue = "World asdasdasd") final String name) {
 		return String.format("Hello %s!", name);
 	}
 
 	@GetMapping("/hello")
-	public String hello(@RequestParam(value = "name", defaultValue = "World") final String name) {
+	public String hello(@RequestParam(value = "name", defaultValue = "World asdasd") final String name) {
 		return String.format("Hello %s!", name);
 	}
 }
