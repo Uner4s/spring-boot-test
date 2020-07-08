@@ -29,16 +29,3 @@ spec:
               value: tester
             - name: SPRING_DATASOURCE_PASSWORD
               value: 123456789ab
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: teledoc-app-node-postgresql-service
-spec:
-  type: NodePort
-  selector:
-    app: teledoc-app
-  ports:
-    - port: 8080
-      targetPort: 8080
-      protocol: "TCP"
