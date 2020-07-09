@@ -2,8 +2,10 @@ version: 0.2
 
 env:
   variables:
-    IMAGE_REPO_NAME: "teledoc-rokket"
-    DOCKERCONTAINER: "208054002969.dkr.ecr.us-east-1.amazonaws.com"
+    DOCKER_USERNAME: "uner4s"
+    DOCKER_ACCESS: "dc007a9f-d730-4519-9119-26bce8bdce97"
+    IMAGE_REPO_NAME: "uner4s"
+    DOCKERCONTAINER: "test-image"
 phases:
   install:
     commands:
@@ -23,15 +25,12 @@ phases:
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t $DOCKERCONTAINER/$IMAGE_REPO_NAME:latest -t $DOCKERCONTAINER/$IMAGE_REPO_NAME:$COMMIT_HASH -f Dockerfile .
-      - docker build -t uner4s/test-image:latest -t uner4s/test-image:$COMMIT_HASH -f Dockerfile .
-      # - docker build -t teledoc-rokket .
       - aws eks --region us-east-1 update-kubeconfig --name main-cluster
   post_build:
     commands:
+      - docker login --username uner4s --password dc007a9f-d730-4519-9119-26bce8bdce97
       - docker push $DOCKERCONTAINER/$IMAGE_REPO_NAME:latest
       - docker push $DOCKERCONTAINER/$IMAGE_REPO_NAME:$COMMIT_HASH
-      - docker login --username uner4s --password dc007a9f-d730-4519-9119-26bce8bdce97
-      - docker push uner4s/test-image:$COMMIT_HASH
-      # - CREDENTIALS=$(aws sts assume-role --role-arn arn:aws:iam::208054002969:role/CodeBuildKubectlRole --role-session-name codebuild-kubectl --duration-seconds 900)
+      - CREDENTIALS=$(aws sts assume-role --role-arn arn:aws:iam::208054002969:role/CodeBuildKubectlRole --role-session-name codebuild-kubectl --duration-seconds 900)
       # - kubectl set image deployment/teledoc-app-deployment teledoc-app=$DOCKERCONTAINER/$IMAGE_REPO_NAME:latest
-      - kubectl set image deployment/teledoc-app-deployment --record=true teledoc-app=uner4s/test-image:$COMMIT_HASH
+      - kubectl set image deployment/teledoc-app-deployment --record=true teledoc-app=$IMAGE_REPO_NAME/$DOCKERCONTAINER:$COMMIT_HASH
