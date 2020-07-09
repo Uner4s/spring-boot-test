@@ -4,8 +4,8 @@ env:
   variables:
     DOCKER_USERNAME: "uner4s"
     DOCKER_ACCESS: "dc007a9f-d730-4519-9119-26bce8bdce97"
-    IMAGE_REPO_NAME: "uner4s"
-    DOCKERCONTAINER: "test-image"
+    DOCKERCONTAINER: "uner4s"
+    IMAGE_REPO_NAME: "test-image"
 phases:
   install:
     commands:
