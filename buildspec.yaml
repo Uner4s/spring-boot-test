@@ -31,4 +31,4 @@ phases:
       - docker login --username $DOCKER_USERNAME --password $DOCKER_ACCESS
       - docker push $DOCKERCONTAINER/$IMAGE_REPO_NAME:latest
       - docker push $DOCKERCONTAINER/$IMAGE_REPO_NAME:$COMMIT_HASH
-      - kubectl set image deployment/teledoc-app-deployment --record=true teledoc-app=$IMAGE_REPO_NAME/$DOCKERCONTAINER:$COMMIT_HASH
+      - kubectl set image deployment/teledoc-app-deployment --record=true teledoc-app=$DOCKERCONTAINER/$IMAGE_REPO_NAME:$COMMIT_HASH
