@@ -32,3 +32,4 @@ build/
 
 aws-auth.yaml
 permissions.sh
+first-push.sh
